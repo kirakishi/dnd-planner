@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5e DnD Encounter Planner & Dice Roller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header><h1>D&D 5e Encounter Planner & Tracker</h1></header>
+
+    <div class="container">
+        <aside class="panel">
+            <h3>Interactive Dice Tray</h3>
+
+            <label for="dice-quantity">Number of dice</label>
+            <input id="dice-quantity" type="number" min="1" max="100" value="1">
+
+            <div class="dice-tray">
+                <button class="dice-btn" onclick="rollDie(4)">d4</button>
+                <button class="dice-btn" onclick="rollDie(6)">d6</button>
+                <button class="dice-btn" onclick="rollDie(8)">d8</button>
+                <button class="dice-btn" onclick="rollDie(10)">d10</button>
+                <button class="dice-btn" onclick="rollDie(12)">d12</button>
+                <button class="dice-btn" onclick="rollDie(20)">d20</button>
+                <button class="dice-btn" onclick="rollDie(100)">d100</button>
+                <button class="dice-btn" onclick="clearRolls()">Clear</button>
+            </div>
+
+            <div id="roll-log" class="roll-output">&gt; Ready to roll...</div>
+
+            <h3 style="font-size:1rem; margin:20px 0 5px; color:#aaa;">
+                Browse Catalog (A-Z)
+            </h3>
+            <div id="alphabetical-list" class="az-container">
+                <div style="padding:15px; text-align:center; color:#666;">
+                    Loading catalog data...
+                </div>
+            </div>
+            <p id="catalog-status" aria-live="polite"></p>
+        </aside>
+
+        <aside class="panel">
+            <h2>Add Combatants</h2>
+
+            <div class="form-group">
+                <label for="monster-search">Search Monster Catalog</label>
+                <input
+                    type="text"
+                    id="monster-search"
+                    placeholder="Loading monster catalog..."
+                    autocomplete="off"
+                    disabled
+                >
+                <ul id="suggestions-list" class="suggestions-box"></ul>
+            </div>
+
+            <button
+                id="add-monster-btn"
+                style="background-color:var(--red); font-weight:bold; margin-bottom:25px;"
+                disabled
+            >+ Add Selected Catalog Monster</button>
+
+            <h2>Create Custom Homebrew</h2>
+
+            <div class="form-group">
+                <label for="hb-name">Creature Name</label>
+                <input type="text" id="hb-name" placeholder="e.g. Goblin King">
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:15px;">
+                <div>
+                    <label for="hb-hp">Max HP</label>
+                    <input type="number" id="hb-hp" min="1" placeholder="15">
+                </div>
+                <div>
+                    <label for="hb-ac">Armor Class (AC)</label>
+                    <input type="number" id="hb-ac" min="1" placeholder="10">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="hb-actions">Actions Text Description</label>
+                <input
+                    type="text"
+                    id="hb-actions"
+                    placeholder="Shortsword: +4 to hit, 1d6+2 slashing."
+                >
+            </div>
+
+            <button
+                id="add-homebrew-btn"
+                style="background-color:#333; font-weight:bold;"
+            >+ Spawn Custom Unit</button>
+        </aside>
+
+        <main class="panel">
+            <h2>Random Fight (2014 5e)</h2>
+
+            <div class="form-group">
+                <label for="party-level">Party level (all players)</label>
+                <input id="party-level" type="number" min="1" max="20" value="1">
+            </div>
+
+            <div class="form-group">
+                <label for="party-size">Number of players</label>
+                <input id="party-size" type="number" min="1" max="12" value="4">
+            </div>
+
+            <div class="form-group">
+                <label for="enemy-count">Number of enemies</label>
+                <input id="enemy-count" type="number" min="1" max="100" value="3">
+            </div>
+
+            <div class="form-group">
+                <label for="fight-difficulty">Target difficulty</label>
+                <select id="fight-difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                    <option value="deadly">Deadly</option>
+                </select>
+            </div>
+
+            <button id="random-fight-btn" class="sort-btn">
+                Generate Random Fight
+            </button>
+            <p id="fight-result" aria-live="polite"></p>
+
+            <h2>Active Encounter Deck</h2>
+
+            <div class="summary-box">
+                <div class="summary-stat">
+                    Total Monsters
+                    <span id="total-monsters">0</span>
+                </div>
+                <div class="summary-stat">
+                    Total Budget Value
+                    <span id="total-xp">0 XP</span>
+                </div>
+            </div>
+
+            <div class="dashboard-buttons">
+                <button id="sort-initiative-btn" class="sort-btn">Sort Board Order</button>
+                <button id="clear-encounter-btn" class="clear-btn">Clear All</button>
+            </div>
+
+            <div id="encounter-roster" class="monster-list">
+                <p style="text-align:center;color:#888;">No combatants added.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

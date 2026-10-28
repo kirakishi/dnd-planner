@@ -1,0 +1,3 @@
+curl -fsSL "https://www.dnd5eapi.co/api/2014/monsters" \
+  | jq -r '[.results[].name] | join("|")' \
+  > monsters.txt
